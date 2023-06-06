@@ -1,15 +1,20 @@
 package pert10;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 class Antrian {
-    private LinkedList<Object> antrian;
+    private ArrayList<Object> antrian;
+    private int depan;
+    private int belakang;
 
     public Antrian() {
-        antrian = new LinkedList<>();
+        antrian = new ArrayList<>();
+        depan = 0;
+        belakang = -1;
     }
 
     public void masukkan(Object item) {
-        antrian.addLast(item);
+        antrian.add(item);
+        belakang++;
     }
 
     public Object keluarkan() {
@@ -17,15 +22,17 @@ class Antrian {
             System.out.println("Antrian kosong");
             return null;
         }
-        return antrian.removeFirst();
+        Object item = antrian.get(depan);
+        depan++;
+        return item;
     }
 
     public boolean kosong() {
-        return antrian.isEmpty();
+        return depan > belakang;
     }
 
     public int ukuran() {
-        return antrian.size();
+        return belakang - depan + 1;
     }
 
     public Object lihatDepan() {
@@ -33,7 +40,7 @@ class Antrian {
             System.out.println("Antrian kosong");
             return null;
         }
-        return antrian.getFirst();
+        return antrian.get(depan);
     }
 }
 
@@ -41,9 +48,9 @@ public class antri {
     public static void main(String[] args) {
         Antrian antrian = new Antrian();
 
-        antrian.masukkan("Org 1");
-        antrian.masukkan("Org 2");
-        antrian.masukkan("Org 3");
+        antrian.masukkan("org 1");
+        antrian.masukkan("org 2");
+        antrian.masukkan("org 3");
 
         System.out.println("Ukuran antrian: " + antrian.ukuran());
 
@@ -53,8 +60,8 @@ public class antri {
 
         System.out.println("Apakah antrian kosong? " + antrian.kosong());
 
-        antrian.masukkan("Org 4");
-        antrian.masukkan("Org 5");
+        antrian.masukkan("org 4");
+        antrian.masukkan("org 5");
 
         System.out.println("Lihat Depan: " + antrian.lihatDepan());
         System.out.println("Ukuran antrian: " + antrian.ukuran());
